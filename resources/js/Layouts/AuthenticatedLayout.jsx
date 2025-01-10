@@ -4,7 +4,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-
+import hasAnyPermission from '@/Utils/Permissions';
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
 
@@ -30,6 +30,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                {hasAnyPermission(['permissions index']) &&
+                                    <NavLink href={route('permissions.index')} active={route().current('permissions*')}>
+                                        Permissions
+                                    </NavLink>
+                                }
                             </div>
                         </div>
 
@@ -134,6 +140,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        {hasAnyPermission(['permissions index']) &&
+                            <ResponsiveNavLink href={route('permissions.index')} active={route().current('permissions*')}>
+                                Permissions
+                            </ResponsiveNavLink>
+                        }
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
